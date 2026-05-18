@@ -22,6 +22,15 @@ Wszystkie szczegóły projektu znajdują się w katalogu `docs/biznes`:
 - **Dane:** Static JSON + LocalStorage (brak backendu, brak zewnętrznych API)
 - **YouTube:** Embed iframe całych playlist (bez YouTube Data API)
 - **Spotify:** Statyczne linki (klikalny przycisk bez API)
+- **Wartość wizualna:** Aplikacja wykorzystuje interfejs immersyjny (Glassmorphism, system 15 animowanych kół tła Aurory oraz dynamicznie adaptujące się tła playlist w zależności od nastroju)
+
+---
+
+## Zasady UI/UX Premium (Rygorystyczne)
+
+- **Zakaz ostrych krawędzi przy efektach rozmycia:** Agent musi używać klasy `rounded-full` na kontenerach z efektami `blur` i `shadow`, aby uniknąć błędów wizualnych i spójnie realizować styl Glassmorphism.
+- **Zasada Dark Mode — brak czarnych cieni:** W trybie ciemnym zabrania się używania czarnych cieni (np. `shadow-black`). Należy stosować wyłącznie zewnętrzne poświaty o niskim kryciu, np. `dark:shadow-[0_0_40px_rgba(20,184,166,0.12)]` na głębokim tle `bg-[#020617]`. Dzięki temu zachowuje się efekt immersyjnej głębi bez artefaktów wyglądu płaskiego.
+- **Kontrast tekstu na blurowych elementach:** Zawsze dbaj o to, by teksty na elementach rozmytych miały obniżony kontrast (np. `text-slate-700/90` zamiast pełnej czerni), co pozwala wtopić typografię w tło i buduje efekt luksusowej głębi.
 
 ---
 
@@ -38,6 +47,7 @@ Wszystkie szczegóły projektu znajdują się w katalogu `docs/biznes`:
 - **NIE** używaj: Next.js, TypeScript, Supabase, Firebase, Stripe, Spotify API, YouTube Data API
 - Dane playlist trzymaj w `src/data/playlists.json` (format z `SPEC.md`)
 - Ambient sounds w `public/sounds/` (rain.mp3, white-noise.mp3, cafe.mp3, forest.mp3)
+- Zawsze dbaj o to, by teksty na elementach rozmytych miały obniżony kontrast (np. `text-slate-700/90` zamiast pełnej czerni)
 
 ### 3. Struktura Kodu
 ```
@@ -84,6 +94,7 @@ src/
 | YouTube Data API | Wymaga klucza API - użyj embed iframe |
 | Redux/Zustand | Overhead - wystarczy useState + Context |
 | Docker/Kubernetes | Niepotrzebne dla MVP |
+| Ciężkie biblioteki animacji (Framer Motion, GSAP) | Wszystkie efekty (breathe, aurora flare) muszą być pisane w czystym Tailwind CSS/CSS ze względu na optymalizację wydajności i stałe 60 FPS |
 
 ---
 

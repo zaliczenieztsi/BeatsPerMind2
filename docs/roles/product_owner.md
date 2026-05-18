@@ -9,7 +9,7 @@
 - Poziomu energii (low → high slider)
 - Preferencji muzycznych (tekst/instrumental)
 
-**Value Proposition:** Oszczędność 6-10 godzin miesięcznie na szukaniu muzyki.
+**Value Proposition:** Oszczędność 6-10 godzin miesięcznie na szukaniu muzyki. BeatsPerMind to nie tylko generator linków, ale immersyjne środowisko audio-wizualne, które stymuluje skupienie poprzez zsynchronizowany wizualizator oddechowy i dynamicznie dopasowujące się tło (redukcja przebodźcowania i zmęczenia oczu).
 
 ## Product Backlog
 
@@ -32,8 +32,9 @@
 | ID | Feature | Priority | Story Points | Status |
 |----|---------|----------|--------------|--------|
 | PO-008 | Feature Cards w LearnMore | Medium | 2 | ✅ Done |
-| PO-009 | Dark Mode z glow | Low | 2 | ✅ Done |
-| PO-010 | Organic Breathing Visualizer | Low | 2 | ✅ Done |
+| PO-009 | Dark Mode z glow | Medium | 2 | ✅ Done |
+| PO-010 | Organic Breathing Visualizer | Medium | 2 | ✅ Done |
+| PO-011 | Dynamic Mood-Adaptive Playlist Background (Light/Dark Mode) | High | 3 | 🔄 In Progress
 
 ## Priorities (MoSCoW)
 
@@ -42,10 +43,12 @@
 2. YouTube embed odtwarzanie
 3. Timer Pomodoro
 4. 4 ambient sounds
+5. Dark Mode z glow
 
 ### Should Have
-1. Dark Mode
+1. Organic Breathing Visualizer
 2. Feature Cards edukacyjne
+3. Dynamic Mood-Adaptive Playlist Background (Light/Dark Mode)
 
 ### Could Have
 1. Personalizowane LearnMore z BPM
@@ -66,3 +69,4 @@
 | Playlist generation | < 10 sekund | ✅ OK |
 | Timer accuracy | 25/5 min | ✅ OK |
 | Ambient sounds | 4 working | ✅ OK |
+| Wizualna spójność motywów i płynność animacji oddechowej | 60 FPS / brak zakłóceń wizualnych, brak ostrych krawędzi | ✅ OK |

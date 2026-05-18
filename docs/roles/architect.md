@@ -1,12 +1,15 @@
 # Architect - BeatsPerMind
 
+**Architect's Review Note:**
+Integracja logiki biznesowej z warstwą wizualną na poziomie architektury chroni aplikację przed chaosem w kodzie (tzw. spaghetti CSS). Przesunięcie destrukturyzacji stanu nastroju do komponentu `App` jako Global App State sprawia, że wszystkie pozostałe komponenty konsumują wizualny kontekst w sposób deklaratywny, bez bezpośrednich manipulacji klasami CSS w rozproszonych miejscach. System motywów staje się własnością architektury, a nie przypadkowym dodatkiem w komponentach liściowych.
+
 ## Decyzje Techniczne
 
 ### Stack Decisions
 | Warstwa | Technologia | Powód |
 |---------|-------------|-------|
 | Frontend | React 18 + Vite | Szybki setup, zero config |
-| Styling | Tailwind CSS + shadcn/ui | Gotowe komponenty |
+| Styling | Tailwind CSS + shadcn/ui | Gotowe komponenty, obsługa dynamicznych motywów (Light/Dark Mode), efektów rozmycia warstwowego (Glassmorphism za pomocą backdrop-blur) oraz sprzętowo akcelerowanych animacji CSS bez używania ciężkich bibliotek JS |
 | Routing | React Router v6 | Standard przemysłu |
 | State | useState + Context | Wystarczające dla MVP |
 | Audio | HTML5 Audio + YouTube Embed | Proste usecase |
@@ -16,15 +19,18 @@
 ### Architektura Komponentów
 ```
 Component Hierarchy:
-App.jsx (Router)
+App.jsx (Router + Global App State)
 ├── Landing.jsx
+│   └── DynamicBackground (warstwa tła Aurory zależna od moodTheme)
 ├── Quiz.jsx → useQuiz hook
 ├── PlaylistView.jsx
 │   ├── LearnMore.jsx
 │   └── FocusMode button
+│   └── [propaguje mood theme do Layout Context]
 ├── FocusMode.jsx
 │   ├── Timer.jsx → useTimer hook
 │   └── AmbientPlayer.jsx → useAudio hook
+│   └── [odczytuje themeVariant z Global App State]
 └── Navigation.jsx
 ```
 
@@ -35,6 +41,7 @@ App.jsx (Router)
 classDiagram
     class App {
         +routes
+        +moodTheme
     }
     class Quiz {
         -currentStep
@@ -49,10 +56,14 @@ classDiagram
     class PlaylistView {
         +bestPlaylist
         +isPlaying
+        +mood
+        +backgroundColor
+        +glowIntensity
     }
     class FocusMode {
         +mode
         +timeLeft
+        +themeVariant
     }
     class useTimer {
         +timeLeft
@@ -65,6 +76,8 @@ classDiagram
     App --> FocusMode
     Quiz --> useQuiz
     FocusMode --> useTimer
+    PlaylistView ..> App : mood propagates
+    FocusMode ..> App : themeVariant reads
 ```
 
 ### Data Model
@@ -80,8 +93,11 @@ Playlist JSON Schema:
     "energy": "low",
     "lyrics": "instrumental"
   },
-  "bpm": "60-80"
+  "bpm": "60-80",
+  "mood": "focus" | "relax" | "energy"
 }
+
+Klucz "mood" jest punktem wejścia dla systemu renderowania tła — jego wartość determinuje paletę Aurory, intensywność poświaty (glow) w trybie Dark Mode oraz redukcję ostrych krawędzi kontenerów na całej aplikacji.
 
 AmbientSound Schema:
 {
@@ -89,14 +105,21 @@ AmbientSound Schema:
   "name": "Rain",
   "icon": "CloudRain",
   "src": "/sounds/rain.mp3",
-  "color": "blue"
+  "color": "blue",
+  "moodAlignment": ["focus", "relax"]
 }
+
+Każdy dźwięk środowiskowy ma przypisaną listę nastrojów (moodAlignment), co pozwala na automatyczne dopasowanie palety tła do aktywnie odtwarzanego dźwięku w trybie Focus Mode.
 ```
 
 ### State Flow
 ```
 Quiz Flow:
 User answers → useQuiz stores → playlistMatcher → PlaylistView
+
+Mood & Theme Flow:
+PlaylistView (odczytuje playlist.mood) → Global App State / Layout Context → Dynamic Background Render
+(Aplikowanie klas Tailwind: kolory Aurory, natężenie poświaty 'glow' w trybie Dark Mode, redukcja ostrych krawędzi kontenerów)
 
 Timer Flow:
 useTimer manages (work/break) → FocusMode displays → Auto-switch at 0

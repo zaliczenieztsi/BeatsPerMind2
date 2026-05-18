@@ -8,7 +8,7 @@
 | Unit | Hooks, utils | Jest/Vitest | On change |
 | Integration | Component props | React Testing Library | On PR |
 | E2E | User flows | Manual | Before release |
-| Visual | UI consistency | Manual | Weekly |
+| Visual | UI consistency, glass effects, aurora animations | Playwright Component Testing | On PR |
 
 ### Test Environments
 - Development: `http://localhost:5173`
@@ -57,6 +57,12 @@ Given: User selects "Rain" sound
 When: User clicks play
 Then: Audio file plays
 And: Volume control works
+
+Test FM-005: Aurora animation performance
+Given: Focus Mode active with animate-breathe
+When: 15 animated circles render during timer countdown
+Then: Animation maintains 60 FPS
+And: No CPU spikes during 25-minute work session
 ```
 
 ### Playlist View Tests
@@ -70,6 +76,13 @@ Test PV-002: Spotify link works
 Given: Playlist with Spotify URL
 When: User clicks Spotify button
 Then: Opens new tab to Spotify link
+
+Test PV-003: Adaptive background color changes
+Given: Playlist with mood tags (Focus/Relax or Energy)
+When: Playlist is rendered
+Then: Background displays bordowo-fioletowa palette for Focus/Relax
+And: Background displays morsko-turkusowa palette for Energy
+And: Colors adapt correctly in both Light and Dark themes
 ```
 
 ## Przypadki Edge-Case
@@ -90,6 +103,15 @@ Then: Opens new tab to Spotify link
 | Multiple ambient | User clicks multiple sounds | Only last plays |
 | Volume extremes | Volume 0 or 100% | Audio adjusts accordingly |
 
+### Dark Mode Edge Cases
+| Case | Requirement | Status |
+|------|-------------|--------|
+| Glass morphism contrast | bg-white/50 vs bg-[#020617] glass panels | ⚠️ |
+| Glow visibility | dark:shadow-accent glow on buttons/cards | ⚠️ |
+| Glow color variants | shadow-indigo-500, shadow-purple-500, shadow-pink-500 visible | ⚠️ |
+| Glow contrast ratio | Glow effect maintains WCAG AA on slate-900 | ⚠️ |
+| Glass border visibility | Glass container borders distinguishable in dark | ⚠️ |
+
 ### Browser Compatibility
 | Browser | Status | Notes |
 |---------|--------|-------|
@@ -105,6 +127,9 @@ Then: Opens new tab to Spotify link
 | Bundle size | dist/assets | < 500KB | ✅ |
 | First load | Page render | < 2s | ✅ |
 | Timer accuracy | 25min work | ±1s | ✅ |
+| Aurora animation FPS | 15 animated circles | ≥60 FPS constant | ⚠️ |
+| Glass effect rendering | Backdrop-filter blur | No jank during transitions | ⚠️ |
+| Glow animation | shadow-... animate-pulse | Smooth 60 FPS | ⚠️ |
 
 ### Accessibility Edge Cases
 | Case | Requirement | Status |
