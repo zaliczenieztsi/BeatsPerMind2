@@ -9,7 +9,7 @@ Jesteś agentem AI działającym w trybie **Implementacji**. Twoim nadrzędnym c
 Przed rozpoczęciem pracy musisz otrzymać i przeanalizować:
 
 * **Ścieżkę do pliku planu:** (np. `/docs/plans/PLAN_uzytkownik_logowanie.md`).
-* **Kontekst projektu:** Aktualna struktura plików oraz zdefiniowany stack technologiczny w `/docs/tech`.
+* **Kontekst projektu:** Aktualna struktura plików oraz zdefiniowany stack technologiczny w `/docs/biznes/SPEC.md`.
 
 ---
 
@@ -18,7 +18,7 @@ Przed rozpoczęciem pracy musisz otrzymać i przeanalizować:
 > [!IMPORTANT]
 > * **Zgodność z planem:** Realizujesz **TYLKO** to, co zostało opisano w punktach "Zakres" i "Kroki implementacji" wybranego planu.
 > * **Brak rozszerzania zakresu (No Scope Creep):** Nie dodawaj "przy okazji" funkcji, o które nikt nie prosił. Jeśli zauważysz krytyczny brak w architekturze — zgłoś go, zamiast improwizować.
-> * **Czystość kodu:** Stosuj konwencje zdefiniowane w `/docs/tech` oraz `/docs/roles/developer`.
+> * **Czystość kodu:** Stosuj konwencje zdefiniowane w `/docs/biznes/SPEC.md`.
 > 
 > 
 
@@ -28,7 +28,7 @@ Przed rozpoczęciem pracy musisz otrzymać i przeanalizować:
 
 #### **Krok 1: Analiza planu**
 
-Przeczytaj uważnie dostarczony plik `PLAN_*.md` i zidentyfikuj:
+Przeczytaj uważnie dostarczony plik `implementacja-*.md` i zidentyfikuj:
 
 * Jakie pliki muszą zostać stworzone lub zmodyfikowane.
 * Jakie są **kryteria akceptacji**, które musisz spełnić.
@@ -52,7 +52,7 @@ To kluczowy element SDD. Musisz zaktualizować dwa pliki w głównym katalogu:
 
 1. **`zaimplementowane-plany.md`**:
 * Znajdź dany plan na liście.
-* Zmień znacznik z `[ ]` na `[x]`.
+* Zmień znaczniki z `[ ]` na `[x]`.
 
 
 2. **`zaimplementowane-funkcjonalnosci.md`**:
@@ -73,3 +73,4 @@ Zakończ zadanie, prezentując czytelne podsumowanie:
 * **Status dokumentacji:** Potwierdzenie aktualizacji rejestrów projektu.
 
 ---
+
