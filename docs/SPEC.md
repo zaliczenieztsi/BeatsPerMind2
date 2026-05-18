@@ -1,4 +1,6 @@
-# SPEC.md - Specyfikacja Techniczna BeatsPerMind MVP
+﻿# SPEC.md - Specyfikacja Techniczna BeatsPerMind MVP
+
+> **Technical Alignment Note:** This specification is synchronized with the implementation files in `src/`. All data structures, algorithm logic, and component interfaces must align with the code in this document.
 
 ## 1. Struktura Projektu
 
@@ -23,16 +25,16 @@ beats-per-mind/
 │   │   ├── ThemeToggle.jsx   # Dark Mode Switch
 │   │   └── Timer.jsx         # Komponent timera
 │   ├── context/
-│   │   └── ThemeContext.jsx # Dark Mode 
+│   │   └── ThemeContext.jsx # Dark Mode + Mood Management
 │   ├── data/
-│   │   ├── playlists.json    # 8 playlist z tagami
+│   │   ├── playlists.json    # 8 playlist z tagami + mood field
 │   │   └── ambientSounds.js  # Konfiguracja dźwięków
 │   ├── hooks/
 │   │   ├── useQuiz.js        # Logika quizu
 │   │   ├── useTimer.js       # Logika timera Pomodoro
 │   │   └── useAudio.js       # Odtwarzanie ambient sounds
 │   ├── utils/
-│   │   └── playlistMatcher.js # Algorytm dopasowania
+│   │   └── playlistMatcher.js # Algorytm dopasowania + mood forwarding
 │   ├── App.jsx
 │   └── main.jsx
 ├── index.html
@@ -49,6 +51,7 @@ beats-per-mind/
       "id": "lofi-focus",
       "name": "Lo-Fi Focus",
       "bpm": "70-85",
+      "mood": "focus",
       "youtubePlaylistId": "PL_LIST_ID",
       "spotifyUrl": "https://spotify.link/...",
       "tags": {
@@ -61,6 +64,7 @@ beats-per-mind/
       "id": "upbeat-instrumental",
       "name": "Upbeat Instrumental",
       "bpm": "100-120",
+      "mood": "focus",
       "youtubePlaylistId": "PL_LIST_ID",
       "spotifyUrl": "https://spotify.link/...",
       "tags": {
@@ -73,6 +77,7 @@ beats-per-mind/
       "id": "classical-study",
       "name": "Classical Study",
       "bpm": "80-100",
+      "mood": "focus",
       "youtubePlaylistId": "PL_LIST_ID",
       "spotifyUrl": "https://spotify.link/...",
       "tags": {
@@ -85,6 +90,7 @@ beats-per-mind/
       "id": "workout-hype",
       "name": "Workout Hype",
       "bpm": "140-160",
+      "mood": "energy",
       "youtubePlaylistId": "PL_LIST_ID",
       "spotifyUrl": "https://spotify.link/...",
       "tags": {
@@ -97,6 +103,7 @@ beats-per-mind/
       "id": "running-warmup",
       "name": "Running Warm-up",
       "bpm": "100-120",
+      "mood": "energy",
       "youtubePlaylistId": "PL_LIST_ID",
       "spotifyUrl": "https://spotify.link/...",
       "tags": {
@@ -109,6 +116,7 @@ beats-per-mind/
       "id": "coffee-shop",
       "name": "Coffee Shop Vibes",
       "bpm": "70-90",
+      "mood": "relax",
       "youtubePlaylistId": "PL_LIST_ID",
       "spotifyUrl": "https://spotify.link/...",
       "tags": {
@@ -121,6 +129,7 @@ beats-per-mind/
       "id": "chill-relax",
       "name": "Chill & Relax",
       "bpm": "60-80",
+      "mood": "relax",
       "youtubePlaylistId": "PL_LIST_ID",
       "spotifyUrl": "https://spotify.link/...",
       "tags": {
@@ -133,6 +142,7 @@ beats-per-mind/
       "id": "weekend-vibes",
       "name": "Weekend Vibes",
       "bpm": "90-110",
+      "mood": "relax",
       "youtubePlaylistId": "PL_LIST_ID",
       "spotifyUrl": "https://spotify.link/...",
       "tags": {
@@ -186,7 +196,15 @@ function findBestPlaylist(playlists, userAnswers) {
   });
   
   // Fallback: jeśli brak dopasowania, zwróć pierwszą playlistę
-  return bestMatch || playlists[0];
+  const result = bestMatch || playlists[0];
+  
+  // Forwarduj mood wybranej playlisty do ThemeContext
+  // – inicjuje natychmiastowe, płynne dostosowanie kolorystyki tła
+  if (result && result.mood) {
+    themeContext.setMood(result.mood);
+  }
+  
+  return result;
 }
 ```
 
@@ -266,14 +284,69 @@ const userAnswers = {
 | Warstwa | Technologia |
 |---------|-------------|
 | Framework | React 18 + Vite |
-| Styling | Tailwind CSS + shadcn/ui |
+| Styling | Tailwind CSS + shadcn/ui (z rozszerzeniem o system dynamicznych motywów i efektów Glassmorphism) |
 | Routing | React Router v6 |
 | Stan | useState + Context |
 | Audio | HTML5 Audio + YouTube IFrame API |
 | Dane | Static JSON + LocalStorage |
 | Hosting | Vercel (free tier) |
 
-## 8. Uwagi
+## 8. Standardy Wykonania UI/UX (UI Engine Specs)
+
+### 8.1 Warstwowość Blasku – Blur Layers
+
+FocusModeTimer blur layers must use `rounded-full` only for circular elements. 
+
+**Zakazane (bad examples):**
+```jsx
+// ❌ Square blur layer with rounded-lg - inconsistent
+<div className="absolute inset-0 bg-white/10 backdrop-blur-md rounded-lg" />
+
+// ❌ Mixed border radius values
+<div className="blur-layer rounded-t-xl rounded-b-full" />
+```
+
+**Poprawny (good example):**
+```jsx
+// ✅ Circular blur layer with rounded-full
+<div className="absolute w-64 h-64 bg-white/10 backdrop-blur-md rounded-full" />
+```
+
+### 8.2 Specyfikacja Dark Mode
+
+Dark mode styling uses GPU-accelerated opacity transitions instead of shadows.
+
+| Element | Specyfikacja |
+|---------|--------------|
+| Background | `bg-[#020617]` (navy-950) |
+| Card surfaces | `bg-slate-900/50` with `backdrop-blur` |
+| Glow effect | `dark:shadow-[0_0_40px_rgba(r,g,b,0.12)]` - soft colored glow |
+
+### 8.3 Wydajność Animacji
+
+Wszystkie animacje systemowe muszą używać wyłącznie właściwości przyspieszonych GPU:
+
+**Dozwolone:** `transform`, `opacity`, `filter`
+
+**Zakazane:** `width`, `height`, `top`, `left`, `margin`, `padding`, keyframe `box-shadow`
+
+```css
+/* Poprawny przykład */
+@keyframes pulseGlow {
+  0% { opacity: 0.5; filter: brightness(1); }
+  50% { opacity: 0.8; filter: brightness(1.1); }
+  100% { opacity: 0.5; filter: brightness(1); }
+}
+```
+
+### 8.4 System Mądrych Motywów – Adaptacyjne Tła
+
+ThemeContext przechowuje aktualny mood (`focus`, `energy`, `relax`) i zarządza:
+- Centralizowanym gradientem tła
+- Efektami Glassmorphism (backdrop-blur + transparency)
+- Automatycznym forwardowaniem mood z `playlistMatcher.js` do ThemeProvider
+
+## 9. Uwagi
 
 - BPM jest statyczny (hardcoded) - tylko informacja dla użytkownika
 - Timer działa tylko w foreground (aplikacja aktywna)
