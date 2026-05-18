@@ -7,6 +7,15 @@ BeatsPerMind to aplikacja webowa typu Single Page Application (SPA) przeznaczona
 1. **Generator Playlist** - dopasowuje muzykę do aktywności, energii i preferencji
 2. **Focus Mode** - timer Pomodoro z dźwiękami ambient
 
+### Value Proposition (Unikalna Wartość Użytkowa)
+
+BeatsPerMind to nie tylko stoper i odtwarzacz - to immersyjne, zsynchronizowane środowisko audio-wizualne, które:
+
+- **Stymuluje skupienie** poprzez organiczny wizualizator oddechu oparty na 4 zaokrąglonych warstwach rozmycia eliminujących ostre krawędzie
+- **Redukuje zmęczenie oczu** dzięki adaptacyjnemu Dark Mode z atramentowym tłem (`bg-[#020617]`) i poświatami zewnętrznych (`shadow-glow`) zamiast czarnych cieni
+- **Synchronizuje wizualizację z muzyką** - paletę kolorów tła dynamicznie dopasowuje do nastroju playlisty (bordowo-fioletowa dla Focus, morsko-turkusowa dla Energy)
+- **Dostarcza płynności 60 FPS** przy wyłącznym wykorzystaniu akceleracji sprzętowej GPU dla animacji Aurora i oddechowych
+
 ## 2. Architektura Systemu
 
 ### 2.1 High-Level Architecture
@@ -25,8 +34,8 @@ BeatsPerMind to aplikacja webowa typu Single Page Application (SPA) przeznaczona
 │  │                  └─────────────┘                     │   │
 │  └─────────────────────────────────────────────────────┘   │
 └─────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
+                               │
+                               ▼
 ┌─────────────────────────────────────────────────────────────┐
 │                     DATA LAYER                               │
 │  ┌──────────────────────┐  ┌───────────────────────────┐    │
@@ -34,8 +43,8 @@ BeatsPerMind to aplikacja webowa typu Single Page Application (SPA) przeznaczona
 │  │  (static data)       │  │  (quiz answers, settings) │    │
 │  └──────────────────────┘  └───────────────────────────┘    │
 └─────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
+                               │
+                               ▼
 ┌─────────────────────────────────────────────────────────────┐
 │                   EXTERNAL SERVICES                          │
 │  ┌───────────────────────────────────────────────────────┐  │
@@ -54,11 +63,18 @@ BeatsPerMind to aplikacja webowa typu Single Page Application (SPA) przeznaczona
 |-----------|------|--------------|
 | `Landing.jsx` | Strona powitalna, wejście do quizu | React Router |
 | `Quiz.jsx` | Formularz 3 pytań o aktywność/energię | useQuiz hook |
-| `PlaylistView.jsx` | Wyświetla dopasowaną playlistę | useQuiz, playlistMatcher |
-| `FocusMode.jsx` | Timer Pomodoro + AmbientPlayer | useTimer, useAudio |
-| `AmbientPlayer.jsx` | Wybór i odtwarzanie dźwięków | useAudio hook |
+| `PlaylistView.jsx` | Wyświetla dopasowaną playlistę + glassmorphism card | useQuiz, playlistMatcher |
+| `FocusMode.jsx` | Kontener fullscreen z glassmorphism | ThemeContext, useTimer |
+| `FocusModeTimer.jsx` | **Organiczny wizualizator oddechowy oparty na 4 zaokrąglonych warstwach rozmycia (`rounded-full`, `blur-[2px]`) eliminujących ostre krawędzie kontenerów** | useTimer hook |
+| `AmbientPlayer.jsx` | Wybór i odtwarzanie dźwięków z glassmorphism kartami | useAudio hook |
 | `LearnMore.jsx` | Sekcja edukacyjna z feature cards | - |
 | `Navigation.jsx` | Nawigacja między stronami | React Router |
+
+#### Global/Layout Context
+
+| Kontekst | Opis |
+|----------|------|
+| `ThemeContext.jsx` | Zarządza dynamicznym renderowaniem 15 kół tła Aurory (`mood`-based) oraz adaptacyjnym Dark Mode |
 
 #### Custom Hooks
 
@@ -85,8 +101,12 @@ Data Flow:
 1. User selects answers in Quiz
 2. useQuiz stores answers in useState
 3. playlistMatcher calculates best match from playlists.json
-4. PlaylistView displays playlist + YouTube embed + Spotify link
-5. Optionally navigate to FocusMode for timer + ambient sounds
+4. PlaylistView displays playlist + YouTube embed + Spotify link + injects mood parameter into ThemeContext
+5. ThemeContext dynamically renders 15 Aurora circles based on playlist.mood (focus/relax/energy) and adapts color palette:
+   - Focus mode: bordowo-fioletowa (bordo-grafit gradient)
+   - Energy mode: morsko-turkusowa (turkus-granat gradient)
+   - Relax mode: neutral adaptive
+6. Optionally navigate to FocusMode for timer + ambient sounds with synchronized visual styling
 ```
 
 ## 3. Non-Functional Requirements
@@ -98,6 +118,8 @@ Data Flow:
 | Scalability | Static hosting - skalowalne do 10k+ miesięcznie |
 | Security | Brak wrażliwych danych, tylko statyczne JSON |
 | Maintenance | < 1h/miesiąc - zero backendu |
+| **UX & UI Fluidity** | **Animacje tła (Aurora) oraz oddechowe (`animate-breathe`) muszą działać z płynnością na poziomie 60 FPS, wykorzystując wyłącznie akcelerację sprzętową GPU** |
+| **Security/Design (Dark Mode)** | **Bezpieczny Dark Mode: atramentowe tło `bg-[#020617]` + poświaty zewnętrzne `shadow-glow` o niskim kryciu zamiast czarnych cieni; standard glassmorphism card z `backdrop-blur-2xl bg-white/5`** |
 
 ## 4. Constraints
 

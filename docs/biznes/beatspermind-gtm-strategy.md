@@ -38,7 +38,7 @@
 ### 3 Kluczowe Korzyści:
 1. **Playlist w 30 sekund** - bez szukania, bez reklam
 2. **Timer Pomodoro w zestawie** - skupienie bez przełączania app
-3. **Dźwięki tła do wyboru** - white noise, deszcz, kawiarnia
+3. **Dźwięki tła do wyboru** - white noise, deszcz, kawiarnia, las
 
 ### Proof & Trust:
 - Beta testers (studenci)

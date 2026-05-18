@@ -4,12 +4,22 @@
 
 ### Referencja do Dokumentacji
 
-Wszystkie szczegóły projektu znajdują się w katalogu `docs/biznes`:
+Wszystkie szczegóły projektu znajdują się w katalogach `docs/biznes`, `docs/roles` i `docs/architektura`:
 
 | Dokument | Opis |
 |----------|------|
-| `SPEC.md` | Specyfikacja techniczna - struktura projektu, komponenty, dane JSON, algorytm dopasowania |
-| `README.md` | Główny opis projektu, funkcje MVP, tech stack |
+| `SPEC.md` | Specyfikacja techniczna - struktura projektu, komponenty, dane JSON, algorytm dopasowania (Priorytet: Najwyższy - obowiązkowa lektura przed każdą implementacją) |
+| `README.md` | Główny opis projektu, funkcje MVP, tech stack (Priorytet: Wysoki - zrozumienie ogólnego projektu) |
+| `docs/roles/architect.md` | Decyzje architektoniczne, hierarchia komponentów, modele systemu i integracje (Priorytet: Wysoki - zrozumienie struktury kodu i wzorców) |
+| `docs/roles/developer.md` | Standardy kodu, konwencje JSX/Tailwind, workflow implementacji i checklistę (Priorytet: Wysoki - zgodność z kodową podstawą i konwencjami) |
+| `docs/roles/ux_ui.md` | Rygorystyczne przestrzeganie standardów estetyki luksusowej, zakaz generowania płaskich, generycznych komponentów, zasady Glassmorphism i animacji (Priorytet: Najwyższy - kluczowe dla jakości wizualnej i płynności 60 FPS) |
+| `docs/roles/tester.md` | Scenariusze testowe, przypadki edge-case i wymagania jakościowe (Priorytet: Średni - walidacja przed commit) |
+| `docs/roles/product_owner.md` | Wizja produktu, backlog i metryki sukcesu (Priorytet: Środni - zrozumienie celów biznesowych) |
+| `docs/roles/AGENTS.md` | Niniejszy plik - zasady pracy agenta AI (Priorytet: Obowiązkowy - bieżące odniesienie do zasad pracy) |
+| `docs/architektura/adr.md` | Architecture Decision Records - kluczowe decyzje techniczne (w tym ADR-009 o animacjach GPU-only i ADR-010 o kształcie masek rozmycia) (Priorytet: Najwyższy - obowiązkowa lektura przed implementacją JSX/CSS) |
+| `docs/architektura/diagrams.md` | Diagramy systemu (C4, przepływy danych, komponenty, stan) (Priorytet: Środni - zrozumienie architektury na wysokim poziomie) |
+| `docs/architektura/system_overview.md` | Ogólny przegląd systemu, architektura wysokiego poziomu i komponenty (Priorytet: Środni - kontekst projektu) |
+
 ---
 
 ## Podstawowe Informacje o Projekcie
@@ -40,6 +50,7 @@ Wszystkie szczegóły projektu znajdują się w katalogu `docs/biznes`:
 - **ZAWSZE** sprawdź aktualną specyfikację w `docs/biznes/SPEC.md`
 - **NIE** twórz kodu bez znajomości specyfikacji
 - **NIE** dodawaj funkcji spoza zakresu MVP
+- **Zanim napiszesz choćby jedną linię kodu JSX/CSS, przeanalizuj plik ADR (szczególnie ADR-009 i ADR-010) oraz ux_ui, aby upewnić się, że komponent nie wygeneruje błędów krawędzi bluru (artefakt prostokąta) i będzie zoptymalizowany pod 60 FPS**
 
 ### 2. Podczas Implementacji
 - Stosuj się do struktury projektu z `SPEC.md`
@@ -75,6 +86,7 @@ src/
 - Sprawdź czy kod jest zgodny z `SPEC.md`
 - Upewnij się że nie używasz zakazanych technologii
 - Verify that JSON data matches the expected format
+- Przetestuj wygenerowany kod mentalnie pod kątem scenariuszy opisanych w pliku tester. Jeśli kod nie spełnia kryteriów płynności lub estetyki luksusowej – popraw go przed oddaniem użytkownikowi.
 
 ### 7. Komunikacja
 - Jeśli coś jest niejasne, zapytaj przed implementacją

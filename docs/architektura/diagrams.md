@@ -25,6 +25,7 @@
 │         │ (static data)  │   │ (iframe)       │   │ (public/sounds)│       │
 │         └────────────────┘   └────────────────┘   └────────────────┘       │
 │                                                                              │
+│  [ UI Layer based on Premium UI Specs: Glassmorphism + 15 Aurora Circles ]   │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -37,7 +38,6 @@
 │  ┌─────────────────────────────────────────────────────────────────────┐   │
 │  │                    beats-per-mind.vercel.app                         │   │
 │  │                         [React SPA - Vite]                          │   │
-│  │                                                                     │   │
 │  │  ┌─────────────────────────────────────────────────────────────┐   │   │
 │  │  │  UI Layer (React Components)                                │   │   │
 │  │  │  ├──────────────────────────────────────────────────────┤   │   │   │
@@ -45,16 +45,19 @@
 │  │  │  │ Quiz.jsx                                              │   │   │   │
 │  │  │  │ PlaylistView.jsx                                      │   │   │   │
 │  │  │  │ FocusMode.jsx                                         │   │   │   │
+│  │  │  │ FocusModeTimer.jsx ◄── Organic breathing visualizer  │   │   │   │
+│  │  │  │ (4 rounded-full blur layers, no sharp rectangles)    │   │   │   │
 │  │  │  │ AmbientPlayer.jsx                                     │   │   │   │
 │  │  │  │ LearnMore.jsx                                         │   │   │   │
 │  │  │  └──────────────────────────────────────────────────────┘   │   │   │
 │  │  │                                                             │   │   │
-│  │  │  ┌──────────────────────────────────────────────────────┐   │   │   │
+│  │  │  ┌──────────────────────────────────────────────────────┐   │   │
 │  │  │  │ State Management                                      │   │   │   │
 │  │  │  │ ├──────────────────────────────────────────────────┤   │   │   │
 │  │  │  │ │ useQuiz.js (useState for quiz answers)           │   │   │   │
 │  │  │  │ │ useTimer.js (Pomodoro state)                     │   │   │   │
 │  │  │  │ │ useAudio.js (ambient sound state)                │   │   │   │
+│  │  │  │ │ ThemeContext.jsx (theme + mood + aurora state)     │   │   │   │
 │  │  │  │ └──────────────────────────────────────────────────┘   │   │   │
 │  │  │  └──────────────────────────────────────────────────────┘   │   │
 │  │  │                                                             │   │
@@ -62,7 +65,9 @@
 │  │  │  │ Routing (React Router)                              │   │   │
 │  │  │  └──────────────────────────────────────────────────────┘   │   │
 │  │  └─────────────────────────────────────────────────────────────┘   │
-│  └─────────────────────────────────────────────────────────────────────┘
+│  │                                                                     │
+│  │  [ UI Layer: Premium UI Specs - Glassmorphism + Aurora Visualizer ] │
+└─────────────────────────────────────────────────────────────────────────────┘
 ```
 
 ## 3. Data Flow Diagram
@@ -73,25 +78,46 @@ Quiz Flow:
 │ Landing │────▶│  Quiz   │────▶│playlistMatcher│────▶│ PlaylistView   │
 └─────────┘     └─────────┘     └──────────────┘     └────────────────┘
      │               │                   │                   │
-     │          useState (answers)         │                   │
+     │          useState (answers)         │                   │ mood param
      │               │                   │              YouTube Embed
      │               │              playlists.json               (iframe)
      │               │                   │
      └───────────────┴───────────────────┴────────────▶ localStorage
+                                │
+                                ▼
+                       ┌────────────────┐
+                       │ ThemeContext   │ ◄── Injects mood: focus/relax/energy
+                       │ (theme + mood) │ ◄── Dynamic color palette
+                       └────────────────┘ ◄── 15 Aurora circles
+                                │
+                                ▼
+                    Aurora Circles (15) styled by mood
+                    - Focus: bordowo-fioletowa paleta
+                    - Energy: morsko-turkusowa paleta
+                    - Relax: neutral adaptive
 
 Focus Mode Flow:
-┌──────────────┐     ┌──────────────┐     ┌────────────────────┐
-│ PlaylistView │────▶│ Focus Mode   │────▶│ AmbientPlayer      │
-└──────────────┘     └──────────────┘     └────────────────────┘
-                           │                        │
-                    useTimer.js              useAudio.js
-                           │                        │
-                    25min work / 5min break   4x ambient sounds
-                           │                        │
-                    ┌──────┴──────┐        ┌────────┴────────┐
-                    │ Timer.jsx   │        │ index.css       │
-                    └─────────────┘        │ (audio styles)  │
-                                            └─────────────────┘
+┌──────────────┐     ┌──────────────┐     ┌─────────────────┐
+│ PlaylistView │────▶│ Focus Mode   │────▶│ AmbientPlayer   │
+└──────────────┘     └──────────────┘     └─────────────────┘
+                            │                        │
+                     useTimer.js              useAudio.js
+                            │                        │
+                     25min work / 5min break   4x ambient sounds
+                            │                        │
+                            ▼                        ▼
+                   ┌────────────────┐    ┌────────────────────┐
+                   │ FocusModeTimer.jsx◄──┤ Index.css          │
+                   │ (organic viz.) │    │ animate-breathe CSS  │
+                   │ 4 rounded-full │    │ (60 FPS GPU)       │
+                   │ + blur layers  │    └────────────────────┘
+                   └────────────────┘             │
+                            │                     │ synced pulse
+                            ▼                       │ (no sharp artifacts)
+                   ┌────────────────┐              │
+                   │ ThemeContext   │◄───────────┘
+                   │ (mood sync)    │
+                   └────────────────┘
 ```
 
 ## 4. Component Diagram (UML-style)
@@ -114,22 +140,35 @@ Focus Mode Flow:
 │                      ┌────────────────┐                 ▼                   │
 │                      │   useQuiz      │       ┌─────────────────┐          │
 │                      │                │       │ LearnMore       │          │
+│                      │ [answers]      │       │                 │          │
+│                      └────────────────┘       │ - FeatureCards  │          │
+│                               │                └─────────────────┘          │
+│                               ▼                         │                   │
+│                      ┌────────────────┐                 ▼                   │
+│                      │playlistMatcher  │       ┌─────────────────┐          │
+│                      │ [score system] │       │ FocusMode       │          │
 │                      └────────────────┘       │                 │          │
-│                               │                │ - FeatureCards  │          │
-│                               ▼                └─────────────────┘          │
-│                      ┌────────────────┐                 │                   │
-│                      │playlistMatcher  │                 ▼                   │
-│                      │                │       ┌─────────────────┐          │
-│                      └────────────────┘       │ FocusMode       │          │
-│                               │                │                 │          │
-│                               ▼                │ - Timer         │          │
-│                      ┌────────────────┐       │ - AmbientPlayer │          │
-│                      │playlists.json   │       └─────────────────┘          │
+│                               │                │ - Timer (useTimer)│        │
+│                               ▼                │ - AmbientPlayer │        │
+│                      ┌────────────────┐       │                 │        │
+│                      │playlists.json   │       └─────────────────┘        │
+│                      │ [mood tags]    │                 │                   │
 │                      └────────────────┘                 │                   │
-│                                            ┌──────────────┴──────────────┐  │
-│                                            │  useTimer    │  useAudio      │  │
-│                                            │              │               │  │
-│                                            └──────────────┴──────────────┘  │
+│                                            ┌──────────────┼──────────────┐  │
+│                                            │              │              │  │
+│                                            ▼              │              ▼  │
+│                      ┌────────────────┐                 │          ┌────────────────┐
+│                      │ ThemeContext   │◄────────────────┘          │FocusModeTimer.jsx│
+│                      │                │                            │(organic viz)     │
+│                      │ [theme]        │                            │4 rounded blur    │
+│                      │ [mood]         │                            │layers            │
+│                      │ [auroraCount]  │                            └──────────────────┘
+│                      └────────────────┘                                   │
+│                               │                                           │
+│                               ▼                                           │
+│                      Aurora Circles (15, mood-styled)                     │
+│                      - No sharp rectangles (rounded-full)                 │
+│                      - Glassmorphism cards (backdrop-blur-2xl)              │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -159,8 +198,20 @@ Timer State (useTimer.js):
 
 Audio State (useAudio.js):
 ┌─────────────────────────────────────────────────────────────┐
-│ const [currentSound, setCurrentSound] = useState(null)     │
+│ const [currentSound, setCurrentSound] = useState(null)   │
 │ const [volume, setVolume] = useState(0.5)                  │
 │ const [isPlaying, setIsPlaying] = useState(false)          │
+└─────────────────────────────────────────────────────────────┘
+
+Theme & Mood State (ThemeContext.jsx):
+┌─────────────────────────────────────────────────────────────┐
+│ const [theme, setTheme] = useState('dark') // light | dark  │
+│ const [currentMood, setCurrentMood] = useState('focus')     │
+│ // focus (bordowo-fioletowy) | relax | energy              │
+│ const [auroraCount] = useState(15) // Stałe koła tła        │
+│                                                              │
+│ // Dynamic color palette from playlist.mood                 │
+│ // Focus: oklch(0.2 0.1 0) → oklch(0.08 0.01 260)           │
+│ // Energy: oklch(0.25 0.08 210) → oklch(0.05 0.02 270)      │
 └─────────────────────────────────────────────────────────────┘
 ```

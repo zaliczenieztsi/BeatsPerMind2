@@ -107,7 +107,7 @@
 ### Immediate gaps (quick wins):
 1. ✅ Integracja BPM + Focus Mode + Playlisty w jednym miejscu
 2. ✅ YouTube embed (darmowe playlisty)
-3. ✅ Dźwięki tła (white noise, deszcz, kawiarnia)
+3. ✅ Dźwięki tła (white noise, deszcz, kawiarnia, las)
 
 ### Differentiation angles:
 - Skupienie na niszy "studenci do nauki"

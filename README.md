@@ -17,12 +17,9 @@ Dodatkowo aplikacja oferuje **Focus Mode** - timer Pomodoro z wbudowanymi dźwi�
 
 ---
 
-### 💡 Ważna uwaga dotycząca wersji
-
 > [!IMPORTANT]
-> **Kontekst dokumentacji:**
-> * Dokumentacja zgromadzona w katalogu [`docs/biznes`](docs/biznes) opisuje **pełną, docelową wizję aplikacji** (tzw. *Full Product Vision*).
-> * Obecnie opublikowana aplikacja to **pierwsza stabilna wersja działająca**. Jej szczegółowy opis, aktualny zakres funkcjonalny oraz strukturę techniczną znajdziesz w pliku [`system_overview.md`](docs/architektura/system_overview.md).
+> **Zakres wersji MVP (Product Scope)**
+> Obecna wersja aplikacji to w pełni funkcjonalne, darmowe MVP. Funkcjonalności takie jak **system logowania** oraz **płatności**, wspomniane w dokumentacji strategicznej/biznesowej, stanowią założenia dla przyszłych wydań rynkowych. Cała pozostała dokumentacja techniczna i wizualna opisuje w 100% zaimplementowany i działający stan aplikacji.
 
 ---
 
@@ -101,7 +98,7 @@ Dodatkowo aplikacja oferuje **Focus Mode** - timer Pomodoro z wbudowanymi dźwi�
 2. **BPM Display** - wyświetlanie tempa muzycznego
 3. **YouTube Integration** - odtwarzanie bezpośrednio w aplikacji
 4. **Focus Mode** - timer Pomodoro (25/5 min)
-5. **Background Sounds** - white noise, deszcz, kawiarnia
+5. **Background Sounds** - white noise, deszcz, kawiarnia, las
 
 ---
 
