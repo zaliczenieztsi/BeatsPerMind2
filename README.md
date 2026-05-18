@@ -19,7 +19,7 @@ Dodatkowo aplikacja oferuje **Focus Mode** - timer Pomodoro z wbudowanymi dźwi�
 
 > [!IMPORTANT]
 > **Zakres wersji MVP (Product Scope)**
-> Obecna wersja aplikacji to w pełni funkcjonalne, darmowe MVP. Funkcjonalności takie jak **system logowania** oraz **płatności**, wspomniane w dokumentacji strategicznej/biznesowej, stanowią założenia dla przyszłych wydań rynkowych. Cała pozostała dokumentacja techniczna i wizualna opisuje w 100% zaimplementowany i działający stan aplikacji.
+> Obecna wersja aplikacji to w pełni funkcjonalne, darmowe MVP. Funkcjonalności takie jak **system logowania** oraz **płatności**, wspomniane w dokumentacji biznesowej, stanowią założenia dla przyszłych wydań rynkowych. Cała pozostała dokumentacja techniczna i wizualna opisuje w 100% zaimplementowany i działający stan aplikacji.
 
 ---
 
