@@ -1,4 +1,4 @@
-# Tester - BeatsPerMind
+﻿# Tester - BeatsPerMind
 
 ## Strategia Testów
 
@@ -21,7 +21,7 @@
 Test QR-001: Quiz displays 3 questions
 Given: User navigates to /quiz
 When: Page loads
-Then: Q1 (activity), Q2 (energy slider), Q3 (lyrics) are visible
+Then: Q1 (activity), Q2 (energy - 3 buttons: low/medium/high), Q3 (lyrics) are visible
 
 Test QR-002: Answers are saved
 Given: User selects answers

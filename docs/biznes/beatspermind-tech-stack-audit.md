@@ -1,4 +1,4 @@
-# Tech Stack Audit: BeatsPerMind
+﻿# Tech Stack Audit: BeatsPerMind
 
 **Data:** 2026-04-05  
 **Projekt:** BeatsPerMind – Playlisty + Focus Mode dla studentów  
@@ -46,7 +46,7 @@
 | **DF** | 7/10 | 6/10 | 8/10 |
 | **SUMA** | **34/40** | **28/40** | **33/40** |
 
-**Wybór:** ✅ **Tailwind + shadcn/ui** – gotowe komponenty (Button, Card, Slider), responsive z automatu, kod skopiowany do projektu (brak vendor lock-in).
+**Wybór:** ✅ **Tailwind + shadcn/ui** – gotowe komponenty (Button, Card, Progress), responsive z automatu, kod skopiowany do projektu (brak vendor lock-in).
 
 ---
 
@@ -216,7 +216,7 @@ Faza 1 (teraz)                 Faza 2 (gdy 100+ użytkowników)
 - [ ] **Scaffold:** `npm create vite@latest beats-per-mind -- --template react`
 - [ ] **Tailwind:** Zainstalowany według oficjalnego setup
 - [ ] **shadcn/ui:** Zainicjowany (`npx shadcn-ui@latest init`)
-- [ ] **Dodane komponenty shadcn:** Button, Card, Slider, Progress
+- [ ] **Dodane komponenty shadcn:** Button, Card, Progress
 - [ ] **Routing:** React Router zainstalowany
 - [ ] **Data:** Plik `src/data/playlists.json` z 5-10 playlistami
 - [ ] **Icons:** Lucide-react (domyślne z shadcn)

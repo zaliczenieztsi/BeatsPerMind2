@@ -1,4 +1,4 @@
-# BeatsPerMind 🎵🧠
+﻿# BeatsPerMind 🎵🧠
 
 **Twoja playlista do nauki w 30 sekund - dopasowana do BPM i Twojego nastroju.**
 
@@ -10,7 +10,7 @@ link do strony: (https://beats-per-mind2.vercel.app/)
 
 BeatsPerMind to aplikacja webowa dla studentów, która generuje playlisty muzyczne dopasowane do:
 - **Aktywności** (nauka, trening, praca, relaks)
-- **Poziomu energii** (slider Low → High)
+- **Poziomu energii** (Niski / Średni / Wysoki)
 - **Preferencji muzycznych** (z tekstem / instrumentalna)
 
 Dodatkowo aplikacja oferuje **Focus Mode** - timer Pomodoro z wbudowanymi dźwiękami tła (white noise, deszcz, kawiarnia).

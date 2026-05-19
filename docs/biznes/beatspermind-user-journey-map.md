@@ -1,4 +1,4 @@
-# WF_User_Journey_Map - BeatsPerMind
+﻿# WF_User_Journey_Map - BeatsPerMind
 
 ## Mapa Ścieżki Użytkownika
 
@@ -59,7 +59,7 @@ Kwestionariusz (3 pytania)
 
 ### Required fields:
 - [ ] **Co robisz?:** Nauka / Trening / Praca / Relaks (dropdown)
-- [ ] **Jaki masz poziom energii?:** Slider (Low → High)
+- [ ] **Jaki masz poziom energii?:** Niski / Średni / Wysoki (trzy poziomy do wyboru)
 - [ ] **Jaki typ muzyki?:** Z tekstem / Instrumentalna (toggle)
 
 ### Friction Points:

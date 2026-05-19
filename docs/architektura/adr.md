@@ -1,4 +1,4 @@
-# BeatsPerMind - Architecture Decision Records (ADR)
+﻿# BeatsPerMind - Architecture Decision Records (ADR)
 
 ## Architect's Alignment Note
 
@@ -54,7 +54,7 @@ Potrzeba wybrać bibliotekę stylingową dla szybkiego prototypowania UI, zarchi
 Wybrano **Tailwind CSS + shadcn/ui**.
 
 ### Uzasadnienie
-- shadcn/ui dostarcza gotowe komponenty (Button, Card, Slider)
+- shadcn/ui dostarcza gotowe komponenty (Button, Card, Progress)
 - Copy-paste implementacja bez vendor lock-in
 - Responsive utilities wbudowane
 - Theme-aware dark mode z Tailwind

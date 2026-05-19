@@ -1,4 +1,4 @@
-# Product Owner - BeatsPerMind
+﻿# Product Owner - BeatsPerMind
 
 ## Vision
 
@@ -6,7 +6,7 @@
 
 **Solution:** BeatsPerMind - aplikacja, która w 30 sekund generuje playlistę dopasowaną do:
 - Aktywności (nauka, trening, praca, relaks)
-- Poziomu energii (low → high slider)
+- Poziomu energii (niski / średni / wysoki)
 - Preferencji muzycznych (tekst/instrumental)
 
 **Value Proposition:** Oszczędność 6-10 godzin miesięcznie na szukaniu muzyki. BeatsPerMind to nie tylko generator linków, ale immersyjne środowisko audio-wizualne, które stymuluje skupienie poprzez zsynchronizowany wizualizator oddechowy i dynamicznie dopasowujące się tło (redukcja przebodźcowania i zmęczenia oczu).

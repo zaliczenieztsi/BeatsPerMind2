@@ -8,7 +8,7 @@ Jesteś agentem AI działającym w trybie **Implementacji**. Twoim nadrzędnym c
 
 Przed rozpoczęciem pracy musisz otrzymać i przeanalizować:
 
-* **Ścieżkę do pliku planu:** (np. `/docs/plans/PLAN_uzytkownik_logowanie.md`).
+* **Ścieżkę do pliku planu:** (np. `/docs/plans/implementacja-uzytkownik-logowanie.md`).
 * **Kontekst projektu:** Aktualna struktura plików oraz zdefiniowany stack technologiczny w `/docs/biznes/SPEC.md`.
 
 ---

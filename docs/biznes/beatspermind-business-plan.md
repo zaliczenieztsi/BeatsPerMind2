@@ -1,4 +1,4 @@
-# BeatsPerMind - Pełna Analiza Biznesowa
+﻿# BeatsPerMind - Pełna Analiza Biznesowa
 
 **Produkt:** Aplikacja do rekomendacji playlist dopasowanych do aktywności i BPM z Focus Mode (Pomodoro + dźwięki tła)
 **Wersja dokumentu:** 1.0
@@ -776,7 +776,7 @@ _Użytkownik uzna, że aplikacja warta jest $4.99/miesiąc, jeśli:_
 
 **Required fields:**
 - [ ] Co robisz?: Nauka / Trening / Praca / Relaks (dropdown)
-- [ ] Jaki masz poziom energii?: Slider (Low → High)
+- [ ] Jaki masz poziom energii?: Niski / Średni / Wysoki (trzy poziomy do wyboru)
 - [ ] Jaki typ muzyki?: Z tekstem / Instrumentalna (toggle)
 
 **Friction Points:**
